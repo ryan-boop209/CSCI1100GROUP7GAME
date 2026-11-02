@@ -3,6 +3,15 @@ from random import randint
 from health_bar import HealthBar
 
 class Character:
+    
+    """
+    
+    
+    
+    
+    
+    
+    """
     def __init__(self, chr_name: str, n_name: str, health: int, damage: int) -> None:
         self.name = chr_name
         self.n_name = n_name
@@ -10,13 +19,22 @@ class Character:
         self.max_health = health
         self.damage = damage
 
-        self.weapon = nothing
+        self.is_dodging = False
+        self.is_guarding = False
 
     def attack(self, target) -> None: #scales hero's damage with current equiped weapon
         total_damage = self.damage + self.weapon.damage 
         target.health -=total_damage #how damage works
         target.health = max(target.health, 0)
         target.health_bar.update()
+        
+        if target.is_dodging:
+            total_damage = 0
+            print(f"{self.name} successfully dodged")
+        
+        if target.is_guarding:
+            total_damage = int(total_damage * 0.5)
+            print(f"{self.name} braced for your attack")
 
     def reset_health(self) -> None: #Resets health
         self.health = self.max_health
@@ -24,15 +42,18 @@ class Character:
         
     def guard(self) -> None: #This blocks most of the incoming damage but not all
        #= (self.damage + self.weapon.damage) * 0.75
-        pass
+        self.is_dodging = False
+        self.is_guarding = True
     
-    def dodge(self) -> None: #This blocks all damage but a chance you wont.
-        #if dodgevalue == n: #N should be a constant updating value if the user chooses. 
-                             #N compares to object value
-            #total_damage = 0 #Recieves 0 incoming damage
-        #else:
-            #total_damage = self.damage + self.weapon.damage 
-        pass
+    def dodge(self) -> None: 
+        import random
+        if random.random() > 0.5:
+            
+            self.is_dodging = True
+            self.is_guarding = False
+        else: 
+            self.is_dodging = False
+            self.is_guarding = False
 
 class Protag(Character):
     def __init__(self, chr_name: str, n_name: str, health: int, damage: int):
