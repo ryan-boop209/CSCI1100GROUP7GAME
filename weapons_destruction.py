@@ -1,4 +1,17 @@
+"""
+    weapons_destruction.py
+    Ryan S
+
+    Class system for weapons. Featuring global scope variables.
+"""
+
+
 class Weapon:
+    """
+    This is the general class system for weapons
+    Assigning values in the following order below helps automatically keep track of the damage value and the "Random" mulitplier value. Im too lazy to make one.
+    The weapons below are examples.
+    """
     def __init__(self, name, weapon_type, damage, value) -> None:
         self.name = name
         self.weapon_type = weapon_type
