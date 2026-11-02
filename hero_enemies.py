@@ -140,6 +140,13 @@ class Enemy_3(Character):
         super().__init__(chr_name, n_name, health, damage)
         self.weapon = weapon
         self.health_bar = HealthBar(self, color ="red")
+        
+class Enemy_4(Character):
+    def __init__(self, chr_name: str, n_name: str, health: int, damage: int,weapon =Rat_weapon):
+        super().__init__(chr_name, n_name, health, damage)
+        self.weapon = weapon
+        self.health_bar = HealthBar(self, color ="red")
+
 
 class Boss(Character):
     def __init__(self, chr_name: str, n_name: str, health: int, damage: int, weapon=Roach_weapon):

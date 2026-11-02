@@ -48,30 +48,67 @@ Menu Option:
     Goes to story
 
 """
-print("What is protag going to do?")
-print("Attack [1] \n Guard [2] \n Dodge [3]")
-# player_choice: str = input(">>>>>>  ")
-
-# choice: int = int(player_choice)
-# try:
-#     if choice == 1:
-#         print("You attacked.")
-#         pass
-#     elif choice == 2:
-#         print("You choose to guard the incoming attack.")
-#         pass
-#     elif choice == 3:
-#         print("You took a gamble to dodge. Lets hope it goes well")
-#         pass
-# except ValueError:
-#     print("Put a number.")
+def fight(hero, enemy) -> None:
+    print(f"Will {Hero.name} win or will they fall?")
     
-# enemy_choice: int = randint(1:4)
-# if choice == 1:
-#     print("You attacked.")
-#     pass
-# elif choice == 2:
-#     print("You choose to guard the incoming attack.")
-#     pass
-# elif choice == 3:
-#     print("You took a gamble to dodge. Lets hope it goes well")
+    while hero.health > 0 and enemy.health >0:
+        hero.is_dodging:bool = False
+        hero.is_guarding: bool = False
+        enemy.is_dodging: bool = False
+        enemy.is_guarding: bool = False
+        
+        print("\n" + "=" * 40)
+        hero.health_bar.draw()
+        enemy.health_bar.draw()
+        print("=" * 40)
+        
+        print("Attack [1] \n Guard [2] \n Dodge [3]")
+        player_choice: int = int(input(">>>>>>  "))
+        
+        try:
+            if player_choice == 1:
+                print(f"{Hero.Name} attacks {Enemy.name}!")
+                hero.attack(enemy)
+                valid_turn = True
+            elif player_choice == 2:
+                print(f"{Hero.name} chose to brace the incoming attack.")
+                hero.guard()
+                valid_turn = True
+            elif player_choice == 3:
+                print(f"{Hero.name} choose to gamble their odds.")
+                hero.dodge
+                if hero.is_dodging:
+                    print(f"{Hero.name} became Neo from the matrix!")
+                else:
+                    print(f"{Hero.name} fell to the ground and got hit, and have back pain.")
+                valid_turn = True
+        except ValueError:
+                print("Invalid input! Please type a number, not letters or symbols. You goober.")
+                
+        if enemy.health <= 0:
+            print("You showed them whos boss.")
+            break
+        
+        print(f"Now its {enemy.name} turn to decide what to do.")
+        enemy_action = randint(1,3)
+        
+        if enemy_action == 1:
+            print(f"{enemy.name} launches an attack!")
+            enemy.attack(hero)
+        elif enemy_action == 2:
+            enemy.guard()
+            print(f"{enemy.name} braces and guards against incoming attacks!")
+        elif enemy_action == 3:
+            enemy.dodge()
+            if enemy.is_dodging:
+                print(f"{enemy.name} nimbly steps back to dodge!")
+            else:
+                print(f"{enemy.name} attempts to dodge, but misses the timing!)
+
+        if hero.health <= 0:
+            print(f"\n{hero.name} has been defeated...")
+            print("====================================")
+            print("           GAME OVER")
+            print("====================================")
+            print("Please try again.")
+            exit()
