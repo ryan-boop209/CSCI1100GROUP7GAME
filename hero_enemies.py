@@ -1,5 +1,6 @@
 from weapons_destruction import nothing, chopsticks, Comically_Large_Spoon, Kantana, Gun, Grem_Weapon, Gob_Weapon, Rat_weapon, Roach_weapon
 from random import randint
+from health_bar import HealthBar
 
 class Character:
     def __init__(self, chr_name: str, n_name: str, health: int, damage: int) -> None:
@@ -15,6 +16,7 @@ class Character:
         total_damage = self.damage + self.weapon.damage 
         target.health -=total_damage #how damage works
         target.health = max(target.health, 0)
+        target.health_bar.update()
 
     def reset_health(self) -> None: #Resets health
         self.health = self.max_health
@@ -38,23 +40,28 @@ class Protag(Character):
     def equip(self, weapon) -> None:
         self.weapon = weapon
         print(f"{self.name} equipped the {self.weapon.name}!")
+        self.health_bar = HealthBar(self, color ="green")
 
 class Enemy_1(Character):
     def __init__ (self, chr_name: str, n_name: str, health: int, damage: int, weapon =Gob_Weapon):
         super().__init__(chr_name, n_name, health, damage)
         self.weapon = weapon
+        self.health_bar = HealthBar(self, color = "red")
 
 class Enemy_2(Character):
     def __init__(self, chr_name: str, n_name: str, health: int, damage: int, weapon =Grem_Weapon):
         super().__init__(chr_name, n_name, health, damage)
         self.weapon = weapon
+        self.health_bar = HealthBar(self, color ="red")
 
 class Enemy_3(Character):
     def __init__(self, chr_name: str, n_name: str, health: int, damage: int,weapon =Rat_weapon):
         super().__init__(chr_name, n_name, health, damage)
         self.weapon = weapon
+        self.health_bar = HealthBar(self, color ="red")
 
 class Boss(Character):
     def __init__(self, chr_name: str, n_name: str, health: int, damage: int, weapon=Roach_weapon):
         super().__init__(chr_name, n_name, health, damage)
         self.weapon = weapon
+        self.health_bar = HealthBar(self, color ="red")
